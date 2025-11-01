@@ -1,0 +1,1 @@
+"use client";Object.defineProperty(exports,"__esModule",{value:true});exports.default=void 0;var _swipeAction=require("./swipe-action");var _default=_swipeAction.SwipeAction;exports.default=_default;

@@ -1,0 +1,24 @@
+import type { Rule, RuleObject, RuleRender } from 'rc-field-form/lib/interface';
+import type { FormInstance, FormProps } from './Form';
+import InternalForm, { useForm, useWatch } from './Form';
+import type { FormItemProps } from './FormItem';
+import Item from './FormItem';
+import type { FormListFieldData, FormListOperation, FormListProps } from './FormList';
+import List from './FormList';
+import ErrorList from './ErrorList';
+import { FormProvider } from './context';
+import useFormInstance from './hooks/useFormInstance';
+export type FormLayout = 'horizontal' | 'vertical';
+type InternalFormType = typeof InternalForm;
+type CompoundedComponent = InternalFormType & {
+    useForm: typeof useForm;
+    useFormInstance: typeof useFormInstance;
+    useWatch: typeof useWatch;
+    Item: typeof Item;
+    List: typeof List;
+    ErrorList: typeof ErrorList;
+    Provider: typeof FormProvider;
+};
+declare const Form: CompoundedComponent;
+export type { FormInstance, FormItemProps, FormListFieldData, FormListOperation, FormListProps, FormProps, Rule, RuleObject, RuleRender, };
+export default Form;

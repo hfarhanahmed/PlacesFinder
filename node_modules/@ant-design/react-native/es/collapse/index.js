@@ -1,0 +1,1 @@
+"use client";Object.defineProperty(exports,"__esModule",{value:true});exports.default=void 0;var _collapse=require("./collapse");var Collapse=_collapse.Collapse;Collapse.Panel=_collapse.CollapsePanel;var _default=Collapse;exports.default=_default;

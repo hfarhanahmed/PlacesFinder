@@ -1,0 +1,21 @@
+import type { ReactNode } from 'react';
+import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
+import { SharedValue } from 'react-native-reanimated';
+import { SliderStyle } from './style';
+export type ThumbProps = {
+    offset: SharedValue<number>;
+    getValueByPosition: (position: number) => number;
+    disabled: boolean;
+    isSliding: boolean;
+    onDrag: (value: number) => void;
+    onSlidingStart: () => void;
+    onSlidingComplete: () => void;
+    icon?: ReactNode;
+    popover: boolean | ((value: number) => ReactNode);
+    residentPopover: boolean;
+    style?: StyleProp<ViewStyle>;
+    styles: Partial<SliderStyle>;
+};
+declare const _default: React.NamedExoticComponent<ThumbProps>;
+export default _default;
