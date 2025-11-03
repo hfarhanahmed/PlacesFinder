@@ -1,23 +1,54 @@
-import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { predictionRequest } from '../store/epics';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Text, ListView } from '@ant-design/react-native';
+import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
 
 export const HistoryList: React.FC = () => {
-  const history = useSelector((s: RootState) => s.places.searchHistory);
-  const dispatch = useDispatch();
+  const history:string[] = useSelector((s: RootState) => s.places.searchHistory);
+  const listRef = useRef<ListView<any>>(null);
+
+  const onFetch = async (
+    page = 1,
+    startFetch: (arg0: string[], arg1: number) => void,
+    abortFetch: () => void,
+  ) => {
+    try {
+      //This is required to determinate whether the first loading list is all loaded.
+      let pageLimit = 30
+      startFetch(history, pageLimit)
+    } catch (err) {
+      abortFetch() //manually stop the refresh or pagination if it encounters network error
+    }
+  }
+
+  const renderItem = (item: any) => {
+    return (
+      <View style={{ padding: 10 }}>
+        <Text>{item}</Text>
+      </View>
+    )
+  }
+
+  useEffect(() => {
+    // Refresh the list when history changes
+    if (listRef.current?.refresh) {
+      listRef.current.refresh();
+    }
+  }, [history]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Recent Searches</Text>
-      <FlatList
-        data={history}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.row} onPress={() => dispatch(predictionRequest({ input: item } as any) as any)}>
-            <Text>{item}</Text>
-          </TouchableOpacity>
-        )}
+      <ListView
+      refreshable={false}
+        ref={listRef}
+        onFetch={onFetch}
+        keyExtractor={(item: any, index: any) =>
+          `${item} - ${index}`
+        }
+        renderItem={renderItem}
+        numColumns={1}
       />
     </View>
   );

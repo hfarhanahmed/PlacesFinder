@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { placeDetailsRequest, predictionRequest } from '../store/epics';
 import { addToHistory, setPredictions } from '../store/placesSlice';
 import type { RootState } from '../store/store';
+import { Input } from '@ant-design/react-native';
 
 export const SearchBar: React.FC = () => {
   const [text, setText] = useState('');
@@ -28,7 +29,14 @@ export const SearchBar: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput value={text} onChangeText={onChange} placeholder="Search places" style={styles.input} />
+      <Input.TextArea
+            style={styles.input}
+            rows={1}
+            allowClear
+            placeholder={"Search places"}
+            value={text}
+            onChangeText={onChange}
+          />
       {predictions.length > 0 && (
         <FlatList
           data={predictions}
